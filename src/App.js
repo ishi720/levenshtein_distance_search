@@ -1,40 +1,27 @@
-import React, { Component } from 'react';
-import styles from './App.css'
-import { pokeNameList } from './pokeNameList'
+import React, { useState, useEffect } from 'react';
+import styles from './App.css';
+import { pokeNameList } from './pokeNameList';
 
 const App = () => {
-  return <SuggestForm />
-}
+  return <SuggestForm />;
+};
 
-class SuggestForm extends React.Component {
+const SuggestForm = () => {
+  const [value, setValue] = useState('');
+  const suggestNum = 10;
+  const wordList = pokeNameList;
 
-  //初期化
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
+  // 初期化
+  useEffect(() => {
+    const suggestions = getSuggest(value, wordList, suggestNum);
+    renderSuggest(suggestions);
+  }, [value, wordList]);
 
-    //サジェストの設定
-    this.suggestNum = 10;
-    this.wordList = pokeNameList;
- 
-    //イベント
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  // 画面ロード後の処理
-  componentDidMount() {
-    let suggestions = this.getSuggest(this.state.value, this.wordList, this.suggestNum);
-    this.renderSuggest(suggestions);
-  }
-
-  // Inputタグイベント
-  handleChange(event) {
-    this.setState({value: event.target.value});
-
-    this.state.value = this.hiraganaToKatakana(this.state.value);
-    let suggestions = this.getSuggest(this.state.value, this.wordList, this.suggestNum);
-    this.renderSuggest(suggestions);
-  }
+  // イベント
+  const handleChange = (event) => {
+    const updatedValue = hiraganaToKatakana(event.target.value);
+    setValue(updatedValue);
+  };
 
   /**
   * レーベンシュタイン距離の計測
@@ -42,7 +29,7 @@ class SuggestForm extends React.Component {
   * @param {string} str2 文字列2
   * @return {array} レーベンシュタイン距離の計測結果
   */
-  levenshteinDistance(str1, str2) {
+  const levenshteinDistance = (str1, str2) => {
     const len1 = str1.length;
     const len2 = str2.length;
     
@@ -72,8 +59,7 @@ class SuggestForm extends React.Component {
     }
     
     return dp[len1][len2];
-  }
-
+  };
   /**
   * 複数の文字列をレーベンシュタイン距離で評価した結果をソートし返却する
   * @param {string} searchWord 検索文字列
@@ -81,52 +67,47 @@ class SuggestForm extends React.Component {
   * @param {number} n 返却する文字列の数
   * @return {array} 評価順のデータ
   */
-  getSuggest(searchWord, wordList, n) {
+  const getSuggest = (searchWord, wordList, n) => {
     return wordList
-      .sort((a, b) => this.levenshteinDistance(searchWord, a) - this.levenshteinDistance(searchWord, b))
+      .sort((a, b) => levenshteinDistance(searchWord, a) - levenshteinDistance(searchWord, b))
       .slice(0, n);
-  }
-
-
+  };
   /**
   * ひらがなをカタカナに変換する
   * @param {string} s ひらがな文字列
   * @return {string} カタカナ文字列
   */
-  hiraganaToKatakana(s) {
+  const hiraganaToKatakana = (s) => {
     return s.normalize('NFKC').replace(/[\u3041-\u3096]/g, function(match) {
       return String.fromCharCode(match.charCodeAt(0) + 0x60);
     });
-  }
-  
+  };
   /**
   * サジェストを画面に描画する
   * @param {array} wordList 検索対象文字列の一覧
   */
-  renderSuggest(wordList){
-    let inputElement = document.getElementById('wordList');
-    let wordEle = document.querySelectorAll(".keyword");
+  const renderSuggest = (wordList) => {
+    const inputElement = document.getElementById('wordList');
+    const wordEle = document.querySelectorAll('.keyword');
     wordEle.forEach((s) => {
       s.remove();
     });
-  
+
     wordList.forEach((s) => {
-      const set_ele = document.createElement("span");
+      const set_ele = document.createElement('span');
       set_ele.textContent = s;
-      set_ele.setAttribute('class','keyword');
+      set_ele.setAttribute('class', 'keyword');
       inputElement.append(set_ele);
-     });
-  }
+    });
+  };
 
   //htmlのレンダリング
-  render() {
-    return (
-      <div>
-        <input type="search" value={this.state.value} onChange={this.handleChange} autoComplete="off"/>
-        <div id="wordList"></div>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <input type="search" value={value} onChange={handleChange} autoComplete="off" />
+      <div id="wordList"></div>
+    </div>
+  );
+};
 
 export default App;
