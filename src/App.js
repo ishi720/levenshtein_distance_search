@@ -10,11 +10,13 @@ const SuggestForm = () => {
   const [value, setValue] = useState('');
   const suggestNum = 10;
   const wordList = pokeNameList;
+  const [suggestions, setSuggestions] = useState([]);
 
   // 初期化
   useEffect(() => {
     const suggestions = getSuggest(hiraganaToKatakana(value), wordList, suggestNum);
-    renderSuggest(suggestions);
+    // renderSuggest(suggestions);
+    setSuggestions(suggestions);
   }, [value, wordList]);
 
   // イベント
@@ -22,7 +24,9 @@ const SuggestForm = () => {
     const updatedValue = event.target.value;
     setValue(updatedValue);
   };
-
+  const handleClickWord = (word) => {
+    setValue(word); // クリックされたワードを検索ボックスにセットする
+  };
   /**
   * レーベンシュタイン距離の計測
   * @param {string} str1 文字列1
@@ -105,7 +109,17 @@ const SuggestForm = () => {
   return (
     <div>
       <input type="search" value={value} onChange={handleChange} autoComplete="off" />
-      <div id="wordList"></div>
+      <div id="wordList">
+        {suggestions.map((word, index) => (
+          <span
+            key={index}
+            className="keyword"
+            onClick={() => handleClickWord(word)} // クリック時に検索ボックスにワードをセットする
+          >
+            {word}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };
