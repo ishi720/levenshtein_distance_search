@@ -13,13 +13,13 @@ const SuggestForm = () => {
 
   // 初期化
   useEffect(() => {
-    const suggestions = getSuggest(value, wordList, suggestNum);
+    const suggestions = getSuggest(hiraganaToKatakana(value), wordList, suggestNum);
     renderSuggest(suggestions);
   }, [value, wordList]);
 
   // イベント
   const handleChange = (event) => {
-    const updatedValue = hiraganaToKatakana(event.target.value);
+    const updatedValue = event.target.value;
     setValue(updatedValue);
   };
 
