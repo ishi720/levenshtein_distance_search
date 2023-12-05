@@ -10,13 +10,14 @@ body {
   word-break: break-all;
   display: inline-block;
   cursor: context-menu;
-}
-.keyword:hover {
-  background-color: #3920c3;
+  user-select: none;
+  &:hover {
+    background-color: #3920c3;
+  }
 }
 input {
   padding: 5px 10px;
-}
-input::-webkit-search-cancel-button {
-  -webkit-appearance: none;
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
 }
