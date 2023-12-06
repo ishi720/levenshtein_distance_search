@@ -8,14 +8,12 @@ const App = () => {
 
 const SuggestForm = () => {
   const [value, setValue] = useState('');
-  const suggestNum = 10;
+  const suggestNum = 15 ;
   const wordList = pokeNameList;
   const [suggestions, setSuggestions] = useState([]);
 
-  // 初期化
   useEffect(() => {
     const suggestions = getSuggest(hiraganaToKatakana(value), wordList, suggestNum);
-    // renderSuggest(suggestions);
     setSuggestions(suggestions);
   }, [value, wordList]);
 
@@ -86,35 +84,19 @@ const SuggestForm = () => {
       return String.fromCharCode(match.charCodeAt(0) + 0x60);
     });
   };
-  /**
-  * サジェストを画面に描画する
-  * @param {array} wordList 検索対象文字列の一覧
-  */
-  const renderSuggest = (wordList) => {
-    const inputElement = document.getElementById('wordList');
-    const wordEle = document.querySelectorAll('.keyword');
-    wordEle.forEach((s) => {
-      s.remove();
-    });
-
-    wordList.forEach((s) => {
-      const set_ele = document.createElement('span');
-      set_ele.textContent = s;
-      set_ele.setAttribute('class', 'keyword');
-      inputElement.append(set_ele);
-    });
-  };
-
-  //htmlのレンダリング
   return (
     <div>
-      <input type="search" value={value} onChange={handleChange} autoComplete="off" />
+      <div>
+        <label name="pokemonSearch">ポケモン名　</label>
+        <input id="pokemonSearch" type="search" value={value} onChange={handleChange} autoComplete="off" />
+      </div>
       <div id="wordList">
+        <p>もしかして...</p>
         {suggestions.map((word, index) => (
           <span
             key={index}
             className="keyword"
-            onClick={() => handleClickWord(word)} // クリック時に検索ボックスにワードをセットする
+            onClick={() => handleClickWord(word)} 
           >
             {word}
           </span>

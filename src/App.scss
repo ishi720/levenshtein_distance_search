@@ -17,7 +17,14 @@ body {
 }
 input {
   padding: 5px 10px;
-  &::-webkit-search-cancel-button {
-    -webkit-appearance: none;
+  margin-bottom: 10px;
+}
+#wordList {
+  background-color: rgb(235, 235, 235);
+  padding: 5px 10px;
+  
+  p {
+    padding: 3px;
+    margin: 0px;
   }
 }
