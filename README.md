@@ -1,3 +1,9 @@
+# levenshtein distance search
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/075acf87d28141c4834c8f4f6c4a3d46)](https://app.codacy.com/gh/ishi720/levenshtein_distance_search/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
