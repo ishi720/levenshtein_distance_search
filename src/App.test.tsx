@@ -3,8 +3,12 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import App from './App';
 
 describe('App component', () => {
-  test('サジェストの個数のテスト', () => {
+
+  beforeEach(() => {
     render(<App />);
+  });
+
+  test('サジェストの個数のテスト', () => {
     // 特定のクラス名を持つ要素を取得
     const showSuggestEle = document.getElementsByClassName('keyword');
    
@@ -14,8 +18,8 @@ describe('App component', () => {
     // アサーション: 'keyword' クラス名の要素数が期待値と一致するかを確認
     expect(showSuggestCount).toBe(15);
   });
+
   test('サジェスト結果のテスト(ぴかちう → ピカチュウ)', () => {
-    render(<App />);
     const searchInput = screen.getByLabelText('ポケモン名');
     fireEvent.change(searchInput, { target: { value: 'ぴかちう' } });
 
@@ -31,8 +35,8 @@ describe('App component', () => {
     const hitKeyword = elementsWithKeywordClass[0].innerHTML;
     expect(hitKeyword).toBe("ピカチュウ");
   });
+
   test('サジェスト結果のテスト(てらぱらす → テラパゴス)', () => {
-    render(<App />);
     const searchInput = screen.getByLabelText('ポケモン名');
     fireEvent.change(searchInput, { target: { value: 'てらぱらす' } });
 
