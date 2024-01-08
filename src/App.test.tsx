@@ -1,56 +1,49 @@
-import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import App from './App';
 
 describe('App component', () => {
-
-  beforeEach(() => {
-    render(<App />);
-  });
-
   test('サジェストの個数のテスト', () => {
+    render(<App />);
     // 特定のクラス名を持つ要素を取得
     const showSuggestEle = document.getElementsByClassName('keyword');
    
-    // クラス名が 'keyword' の要素の数を取得
+    // サジェストの数を取得
     const showSuggestCount = showSuggestEle.length;
 
-    // アサーション: 'keyword' クラス名の要素数が期待値と一致するかを確認
+    // サジェストの数のテスト
     expect(showSuggestCount).toBe(15);
   });
 
   test('サジェスト結果のテスト(ぴかちう → ピカチュウ)', () => {
+    render(<App />);
+
+    // inputタグにぴかちうを入力
     const searchInput = screen.getByLabelText('ポケモン名');
     fireEvent.change(searchInput, { target: { value: 'ぴかちう' } });
 
-    // 特定のクラス名を持つ要素を取得
+    // サジェストの1つ目をクリック
     const elementsWithKeywordClass = document.getElementsByClassName('keyword');
-   
-    // クラス名が 'keyword' の要素の数を取得
-    const numberOfKeywordElements = elementsWithKeywordClass.length;
+    fireEvent.click(elementsWithKeywordClass[0]);
 
-    // アサーション: 'keyword' クラス名の要素数が期待値と一致するかを確認
-    expect(numberOfKeywordElements).toBe(15);
+    // inputタグがピカチュウに更新されるかテスト
+    const afterInput = screen.getByLabelText('ポケモン名') as HTMLInputElement;
+    expect(afterInput.value).toBe('ピカチュウ');
 
-    const hitKeyword = elementsWithKeywordClass[0].innerHTML;
-    expect(hitKeyword).toBe("ピカチュウ");
   });
 
   test('サジェスト結果のテスト(てらぱらす → テラパゴス)', () => {
+    render(<App />);
+
+    // inputタグにてらぱらすを入力
     const searchInput = screen.getByLabelText('ポケモン名');
     fireEvent.change(searchInput, { target: { value: 'てらぱらす' } });
 
-    // 特定のクラス名を持つ要素を取得
+    // サジェストの1つ目をクリック
     const elementsWithKeywordClass = document.getElementsByClassName('keyword');
-   
-    // クラス名が 'keyword' の要素の数を取得
-    const numberOfKeywordElements = elementsWithKeywordClass.length;
+    fireEvent.click(elementsWithKeywordClass[0]);
 
-    // アサーション: 'keyword' クラス名の要素数が期待値と一致するかを確認
-    expect(numberOfKeywordElements).toBe(15);
-
-    const hitKeyword = elementsWithKeywordClass[0].innerHTML;
-    expect(hitKeyword).toBe("テラパゴス");
+    // inputタグがテラパゴスに更新されるかテスト
+    const afterInput = screen.getByLabelText('ポケモン名') as HTMLInputElement;
+    expect(afterInput.value).toBe('テラパゴス');
   });
-
 });
