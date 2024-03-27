@@ -3,7 +3,7 @@ name: Coveralls
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   coveralls:
