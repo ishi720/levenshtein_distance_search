@@ -86,7 +86,7 @@ const SuggestForm = () => {
   return (
     <div>
       <div>
-        <label htmlFor="pokemonSearch">ポケモン名　</label>
+        <label htmlFor="pokemonSearch">ポケモン名</label>
         <input id="pokemonSearch" type="search" value={value} onChange={handleChange} autoComplete="off" />
       </div>
       <div id="wordList">
