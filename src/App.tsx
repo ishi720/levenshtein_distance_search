@@ -93,9 +93,9 @@ const SuggestForm = () => {
       </div>
       <div id="wordList">
         <p>もしかして...</p>
-        {suggestions.map((word, index) => (
+        {suggestions.map((word) => (
           <span
-            key={index}
+            key={word}
             className="keyword"
             data-testid="suggestion"
             onClick={() => handleClickWord(word)}
