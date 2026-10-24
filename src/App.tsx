@@ -95,6 +95,7 @@ const SuggestForm = () => {
           <span
             key={index}
             className="keyword"
+            data-testid="suggestion"
             onClick={() => handleClickWord(word)} 
           >
             {word}

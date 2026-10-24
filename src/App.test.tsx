@@ -4,14 +4,8 @@ import App from './App';
 describe('App component', () => {
   test('サジェストの個数のテスト', () => {
     render(<App />);
-    // 特定のクラス名を持つ要素を取得
-    const showSuggestEle = document.getElementsByClassName('keyword');
-   
-    // サジェストの数を取得
-    const showSuggestCount = showSuggestEle.length;
-
     // サジェストの数のテスト
-    expect(showSuggestCount).toBe(15);
+    expect(screen.getAllByTestId('suggestion')).toHaveLength(15);
   });
 
   test('サジェスト結果のテスト(ぴかちう → ピカチュウ)', () => {
@@ -22,8 +16,7 @@ describe('App component', () => {
     fireEvent.change(searchInput, { target: { value: 'ぴかちう' } });
 
     // サジェストの1つ目をクリック
-    const elementsWithKeywordClass = document.getElementsByClassName('keyword');
-    fireEvent.click(elementsWithKeywordClass[0]);
+    fireEvent.click(screen.getAllByTestId('suggestion')[0]);
 
     // inputタグがピカチュウに更新されるかテスト
     const afterInput = screen.getByLabelText('ポケモン名') as HTMLInputElement;
@@ -39,8 +32,7 @@ describe('App component', () => {
     fireEvent.change(searchInput, { target: { value: 'てらぱらす' } });
 
     // サジェストの1つ目をクリック
-    const elementsWithKeywordClass = document.getElementsByClassName('keyword');
-    fireEvent.click(elementsWithKeywordClass[0]);
+    fireEvent.click(screen.getAllByTestId('suggestion')[0]);
 
     // inputタグがテラパゴスに更新されるかテスト
     const afterInput = screen.getByLabelText('ポケモン名') as HTMLInputElement;

@@ -20,7 +20,7 @@
 | スタイル | Sass (SCSS) |
 | ビルド・開発サーバー | Vite |
 | テスト | Vitest / React Testing Library / jsdom |
-| Lint | ESLint（typescript-eslint, eslint-plugin-react-hooks, eslint-plugin-testing-library） |
+| Lint | ESLint |
 | 実行環境 | Node.js 24 |
 | CI | GitHub Actions / Coveralls |
 | 配信 | Docker（nginx） |
