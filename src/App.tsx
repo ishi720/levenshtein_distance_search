@@ -94,14 +94,15 @@ const SuggestForm = () => {
       <div id="wordList">
         <p>もしかして...</p>
         {suggestions.map((word) => (
-          <span
+          <button
             key={word}
+            type="button"
             className="keyword"
             data-testid="suggestion"
             onClick={() => handleClickWord(word)}
           >
             {word}
-          </span>
+          </button>
         ))}
       </div>
     </div>
