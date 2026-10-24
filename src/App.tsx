@@ -8,7 +8,7 @@ const SUGGEST_NUM = 15;
 * レーベンシュタイン距離の計測
 * @param {string} str1 文字列1
 * @param {string} str2 文字列2
-* @return {array} レーベンシュタイン距離の計測結果
+* @return {number} レーベンシュタイン距離
 */
 const levenshteinDistance = (str1: string, str2: string) => {
   const len1 = str1.length;
