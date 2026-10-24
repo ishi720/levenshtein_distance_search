@@ -13,9 +13,9 @@ const SUGGEST_NUM = 15;
 const levenshteinDistance = (str1: string, str2: string) => {
   const len1 = str1.length;
   const len2 = str2.length;
-  
+
   const dp: number[][] = [];
-  
+
   for (let i = 0; i <= len1; i++) {
     dp[i] = [];
     for (let j = 0; j <= len2; j++) {
@@ -28,7 +28,7 @@ const levenshteinDistance = (str1: string, str2: string) => {
       }
     }
   }
-  
+
   for (let i = 1; i <= len1; i++) {
     for (let j = 1; j <= len2; j++) {
       if (str1[i - 1] === str2[j - 1]) {
@@ -38,7 +38,7 @@ const levenshteinDistance = (str1: string, str2: string) => {
       }
     }
   }
-  
+
   return dp[len1][len2];
 };
 /**
@@ -50,8 +50,10 @@ const levenshteinDistance = (str1: string, str2: string) => {
 */
 const getSuggest = (searchWord: string, wordList: string[], n: number) => {
   return wordList
-    .sort((a, b) => levenshteinDistance(searchWord, a) - levenshteinDistance(searchWord, b))
-    .slice(0, n);
+    .map((word) => ({ word, distance: levenshteinDistance(searchWord, word) }))
+    .sort((a, b) => a.distance - b.distance)
+    .slice(0, n)
+    .map(({ word }) => word);
 };
 /**
 * ひらがなをカタカナに変換する
@@ -96,7 +98,7 @@ const SuggestForm = () => {
             key={index}
             className="keyword"
             data-testid="suggestion"
-            onClick={() => handleClickWord(word)} 
+            onClick={() => handleClickWord(word)}
           >
             {word}
           </span>
