@@ -4,8 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "^19",
-    "react-dom": "^19",
-    "web-vitals": "^6"
+    "react-dom": "^19"
   },
   "scripts": {
     "start": "vite",
