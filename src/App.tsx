@@ -14,32 +14,24 @@ const levenshteinDistance = (str1: string, str2: string) => {
   const len1 = str1.length;
   const len2 = str2.length;
 
-  const dp: number[][] = [];
 
-  for (let i = 0; i <= len1; i++) {
-    dp[i] = [];
-    for (let j = 0; j <= len2; j++) {
-      if (i === 0) {
-        dp[i][j] = j;
-      } else if (j === 0) {
-        dp[i][j] = i;
-      } else {
-        dp[i][j] = 0;
-      }
-    }
-  }
+  const dp: number[] = Array.from({ length: len2 + 1 }, (_, j) => j);
 
   for (let i = 1; i <= len1; i++) {
+    let diagonal = dp[0];
+    dp[0] = i;
     for (let j = 1; j <= len2; j++) {
+      const above = dp[j];
       if (str1[i - 1] === str2[j - 1]) {
-        dp[i][j] = dp[i - 1][j - 1];
+        dp[j] = diagonal;
       } else {
-        dp[i][j] = 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+        dp[j] = 1 + Math.min(above, dp[j - 1], diagonal);
       }
+      diagonal = above;
     }
   }
 
-  return dp[len1][len2];
+  return dp[len2];
 };
 /**
 * 複数の文字列をレーベンシュタイン距離で評価した結果をソートし返却する
